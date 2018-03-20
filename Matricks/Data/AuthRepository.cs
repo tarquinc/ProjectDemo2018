@@ -22,13 +22,11 @@ namespace Matricks.Data
 
         public async Task<User> Register(string user, string password)
         {
-            // password hash and salt
-          //  byte[] passwordHash, passwordSalt;
-
+            // Hash the password using SHA512 with random key (salt)
             var hash = new HMACSHA512();
             var computedHash = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            var newUser = new User { UserName = user };
 
+            var newUser = new User { UserName = user };
             newUser.PasswordHash = computedHash;
             newUser.PasswordSalt = hash.Key;
 

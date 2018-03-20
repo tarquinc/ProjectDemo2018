@@ -23,6 +23,10 @@ namespace Matricks.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO user) 
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var newUser = await _repo.Register(user.UserName, user.Password);
             return Ok("User added");
         }

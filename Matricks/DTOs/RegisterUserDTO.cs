@@ -8,7 +8,8 @@ namespace Matricks.DTOs
 {
     public class RegisterUserDTO
     {
-        [Required]
+        [Display(Name = "User Name")]
+        [Required(ErrorMessage = "{0} is required") ]
         public string UserName { get; set; }
 
         [MinLength(6, ErrorMessage = "{0} must be at least {1} characters long")]

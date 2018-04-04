@@ -9,6 +9,7 @@ using Matricks.Data;
 using Matricks.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Matricks.Controllers
@@ -19,9 +20,16 @@ namespace Matricks.Controllers
     {
         private readonly IAuthRepository _repo;
 
+        private readonly IConfiguration _key;
+
         public AuthController(IAuthRepository repo)
         {
             _repo = repo;
+        }
+
+        public AuthController(IConfiguration key)
+        {
+            _key = key;
         }
 
         [HttpPost("register")]
@@ -51,6 +59,8 @@ namespace Matricks.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO user)
         {
+
+
             var storedUser = await _repo.Login(user.UserName, user.Password);
             if (storedUser == null)
             {
@@ -58,7 +68,7 @@ namespace Matricks.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("Secret Testing Key");
+            var key = Encoding.ASCII.GetBytes(_key.GetSection("TokenSettings:JWTKey").Value);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]

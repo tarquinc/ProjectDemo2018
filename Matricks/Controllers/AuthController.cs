@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Matricks.Data;
 using Matricks.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Matricks.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Auth")]
+    [Route("api/auth")]
     public class AuthController : Controller
     {
         private readonly IAuthRepository _repo;
@@ -32,6 +36,12 @@ namespace Matricks.Controllers
             
             // If duplicate user name and return bad request here
             // Need method in AuthRepo to test for this
+            if (_repo.Duplicate(user.UserName) == true)
+            {
+                ModelState.AddModelError("UserName", "User name already exists.");
+                return BadRequest(ModelState);
+
+            }
 
             var newUser = await _repo.Register(user.UserName, user.Password);
             // Temporary return result for testing
@@ -46,9 +56,26 @@ namespace Matricks.Controllers
             {
                 return Unauthorized();
             }
-            
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("Secret Testing Key");
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, storedUser.ID.ToString()),
+                    new Claim(ClaimTypes.Name, storedUser.UserName)
+                }),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
             // Temporary return value for testing
-            return Ok(new { ID = storedUser.ID, UserName = storedUser.UserName });
+            return Ok(new { ID = storedUser.ID, UserName = storedUser.UserName, Token = tokenString });
         }
     }
 }

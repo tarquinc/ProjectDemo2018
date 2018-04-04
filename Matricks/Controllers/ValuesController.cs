@@ -9,6 +9,7 @@ namespace MyMatrix.API.Controllers
     {       
         // GET api/values
         [HttpGet]
+        [Authorize]
         public IActionResult GetValues()
         {
             var values = new string[] { "abc", "def", "ghi", "jkl" };

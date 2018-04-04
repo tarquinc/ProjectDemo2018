@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Matricks.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Matricks.Data
@@ -25,9 +26,17 @@ namespace Matricks.Data
         private bool PasswordHashVerified(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             // Hash password and compare with PasswordHash stored in database
+            var hash = new HMACSHA512(passwordSalt);
+            var computedHash = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
 
+            if (computedHash.SequenceEqual(passwordHash))
+            {
+                return true;
+            } else {
+                return false;
+            }
             // Temporary return value for testing
-            return true;
+            //return true;
         }
 
         public async Task<User> Register(string userName, string password)
@@ -44,5 +53,19 @@ namespace Matricks.Data
             await _context.SaveChangesAsync();
             return newUser;
         }
+
+        public Boolean Duplicate(string userName)
+        {
+            var flag = false;
+            foreach(var user in _context.Users)
+            {
+                if (userName == user.UserName)
+                {
+                    return true;
+                }
+            }
+            return flag;
+        }
+
     }
 }

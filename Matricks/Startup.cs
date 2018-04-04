@@ -36,7 +36,6 @@ namespace Matricks
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddMvc();
 
-            //var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("TokenSettings:JWTKey").Value);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

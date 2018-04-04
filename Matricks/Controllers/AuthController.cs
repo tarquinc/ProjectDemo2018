@@ -22,15 +22,16 @@ namespace Matricks.Controllers
 
         private readonly IConfiguration _key;
 
-        public AuthController(IAuthRepository repo)
+        public AuthController(IAuthRepository repo, IConfiguration key)
         {
             _repo = repo;
-        }
-
-        public AuthController(IConfiguration key)
-        {
             _key = key;
         }
+
+        //public IConfiguration(IConfiguration key)
+        //{
+        //    _key = key;
+        //}
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO user) 
@@ -59,8 +60,6 @@ namespace Matricks.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO user)
         {
-
-
             var storedUser = await _repo.Login(user.UserName, user.Password);
             if (storedUser == null)
             {
@@ -85,7 +84,7 @@ namespace Matricks.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
             // Temporary return value for testing
-            return Ok(new { ID = storedUser.ID, UserName = storedUser.UserName, Token = tokenString });
+            return Ok(new { Token = tokenString, ID = storedUser.ID, UserName = storedUser.UserName });
         }
     }
 }

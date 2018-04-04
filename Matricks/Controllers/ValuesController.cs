@@ -6,10 +6,10 @@ namespace MyMatrix.API.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
-    {       
+    {
         // GET api/values
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         public IActionResult GetValues()
         {
             var values = new string[] { "abc", "def", "ghi", "jkl" };

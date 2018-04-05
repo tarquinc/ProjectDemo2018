@@ -62,21 +62,8 @@ namespace Matricks
 
 
 
-            /** /
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Auth}/{action=Index}/{id?}");
-            });
-            /**/
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        "Default",
-            //        "{controller}/{action}/{id?}",
-            //        new { controller = "Auth", action = "Index", id = "" } );
-            //});
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
             

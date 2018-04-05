@@ -60,7 +60,7 @@ namespace Matricks
                 app.UseDeveloperExceptionPage();
             }
 
-           
+
 
             /** /
             app.UseMvc(routes =>
@@ -77,9 +77,9 @@ namespace Matricks
             //        "{controller}/{action}/{id?}",
             //        new { controller = "Auth", action = "Index", id = "" } );
             //});
-            
-            app.UseMvc();
             app.UseAuthentication();
+            app.UseMvc();
+            
         }
     }
 }

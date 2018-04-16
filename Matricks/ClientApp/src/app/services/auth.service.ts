@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 @Injectable()
 export class AuthService {
-  loginUrl = 'http://localhost:52985/api/auth/login'
-  registerUrl = 'http://localhost:52985/api/auth/register'
+  loginUrl = 'http://localhost:52985/api/auth/login/'
+  registerUrl = 'http://localhost:52985/api/auth/register/'
 
   constructor(private http: HttpClient) { }
 

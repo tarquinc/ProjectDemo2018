@@ -341,7 +341,7 @@ var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
         this.loginUrl = 'http://localhost:52985/api/auth/login';
-        this.registerUrl = 'http://localhost:52985/api/auth';
+        this.registerUrl = 'http://localhost:52985/api/auth/register';
     }
     AuthService.prototype.login = function (value) {
         var contentHeader = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpHeaders */]({ 'Content-type': 'application/json' });

@@ -107,12 +107,14 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__nav_nav_component__ = __webpack_require__("./src/app/nav/nav.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__register_register_component__ = __webpack_require__("./src/app/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_auth_service__ = __webpack_require__("./src/app/services/auth.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -137,7 +139,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_3__app_routing_module__["a" /* AppRoutingModule */],
                 __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */]
             ],
-            providers: [],
+            providers: [__WEBPACK_IMPORTED_MODULE_8__services_auth_service__["a" /* AuthService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
@@ -208,7 +210,7 @@ module.exports = ""
 /***/ "./src/app/nav/nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n  <a class=\"navbar-brand\" href=\"#\">The Matrix</a>\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\" aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" href=\"#\">Matches <span class=\"sr-only\">(current)</span></a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" href=\"#\">Friend Lists</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" href=\"#\">Messages</a>\r\n      </li>\r\n      <!--<li class=\"nav-item dropdown\">\r\n        <a class=\"nav-link dropdown-toggle\" href=\"http://example.com\" id=\"dropdown01\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Dropdown</a>\r\n        <div class=\"dropdown-menu\" aria-labelledby=\"dropdown01\">\r\n          <a class=\"dropdown-item\" href=\"#\">Action</a>\r\n          <a class=\"dropdown-item\" href=\"#\">Another action</a>\r\n          <a class=\"dropdown-item\" href=\"#\">Something else here</a>\r\n        </div>\r\n      </li>-->\r\n    </ul>\r\n    <form class=\"form-inline my-2 my-lg-0\">\r\n      <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Username\" aria-label=\"Search\">\r\n      <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Password\" aria-label=\"Search\">\r\n      <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Log-in</button>\r\n    </form>\r\n  </div>\r\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n  <a class=\"navbar-brand\" href=\"#\">The Matrix</a>\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarsExampleDefault\" aria-controls=\"navbarsExampleDefault\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarsExampleDefault\">\r\n    <ul class=\"navbar-nav mr-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" href=\"#\">Matches <span class=\"sr-only\">(current)</span></a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" href=\"#\">Friend Lists</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" href=\"#\">Messages</a>\r\n      </li>\r\n      <!--<li class=\"nav-item dropdown\">\r\n        <a class=\"nav-link dropdown-toggle\" href=\"http://example.com\" id=\"dropdown01\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Dropdown</a>\r\n        <div class=\"dropdown-menu\" aria-labelledby=\"dropdown01\">\r\n          <a class=\"dropdown-item\" href=\"#\">Action</a>\r\n          <a class=\"dropdown-item\" href=\"#\">Another action</a>\r\n          <a class=\"dropdown-item\" href=\"#\">Something else here</a>\r\n        </div>\r\n      </li>-->\r\n    </ul>\r\n    <form class=\"form-inline my-2 my-lg-0\" #navForm=\"ngForm\" (ngSubmit)=\"login()\">\r\n      <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Username\" aria-label=\"Search\" required name=\"username\" [(ngModel)]=\"model.username\">\r\n      <input class=\"form-control mr-sm-2\" type=\"password\" placeholder=\"Password\" aria-label=\"Search\" required name=\"password\" [(ngModel)]=\"model.password\">\r\n      <button class=\"btn btn-outline-success my-2 my-sm-0\" type=\"submit\">Log-in</button>\r\n    </form>\r\n  </div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -230,8 +232,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var NavComponent = /** @class */ (function () {
     function NavComponent() {
+        this.model = {};
     }
     NavComponent.prototype.ngOnInit = function () {
+    };
+    NavComponent.prototype.login = function () {
+        console.log(this.model);
     };
     NavComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -258,7 +264,7 @@ module.exports = ""
 /***/ "./src/app/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<br />\r\n<br />\r\n<div style=\"text-align:center\" width=\"500px\">\r\n  <form class=\"form-signin\" #loginForm=\"ngForm\" (ngSubmit)=\"login()\">\r\n    <!--<img class=\"mb-4\" src=\"http://hddfhm.com/images/clipart-msn-10.png\" alt=\"\" width=\"72\" height=\"72\">-->\r\n    <h1 class=\"h3 mb-3 font-weight-normal\">Sign Up</h1>\r\n    <!--<label for=\"inputEmail\" class=\"sr-only\">Username</label>-->\r\n    <input type=\"text\" id=\"inputUser\" class=\"form-control\" placeholder=\"Username\" required name=\"username\" [(ngModel)]=\"model.username\" autofocus=\"\">\r\n    <!--<label for=\"inputPassword\" class=\"sr-only\">Password</label>-->\r\n    <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required name=\"password\" [(ngModel)]=\"model.password\">\r\n    <!--<!--<label for=\"inputPassword\" class=\"sr-only\">Password</label>-->\r\n    <input type=\"password\" id=\"inputConfirm\" class=\"form-control\" placeholder=\"Confirm Password\" required name=\"confirmPassword\" [(ngModel)]=\"model.confirmPassword\">\r\n    <!--<div class=\"checkbox mb-3\">\r\n      <label>\r\n        <input type=\"checkbox\" value=\"remember-me\"> Remember me\r\n      </label>\r\n    </div>-->\r\n    <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Register</button>\r\n    <button class=\"btn btn-lg btn-primary btn-block\" type=\"button\">Cancel</button>\r\n    <p class=\"mt-5 mb-3 text-muted\">© 2017-2018</p>\r\n  </form>\r\n</div>\r\n\r\n"
+module.exports = "\r\n<br />\r\n<br />\r\n<div style=\"text-align:center\" width=\"500px\">\r\n  <form class=\"form-signin\" #loginForm=\"ngForm\" (ngSubmit)=\"register()\">\r\n    <!--<img class=\"mb-4\" src=\"http://hddfhm.com/images/clipart-msn-10.png\" alt=\"\" width=\"72\" height=\"72\">-->\r\n    <h1 class=\"h3 mb-3 font-weight-normal\">Sign Up</h1>\r\n    <!--<label for=\"inputEmail\" class=\"sr-only\">Username</label>-->\r\n    <input type=\"text\" id=\"inputUser\" class=\"form-control\" placeholder=\"Username\" required name=\"username\" [(ngModel)]=\"model.username\" autofocus=\"\">\r\n    <!--<label for=\"inputPassword\" class=\"sr-only\">Password</label>-->\r\n    <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required name=\"password\" [(ngModel)]=\"model.password\">\r\n    <!--<!--<label for=\"inputPassword\" class=\"sr-only\">Password</label>-->\r\n    <input type=\"password\" id=\"inputConfirm\" class=\"form-control\" placeholder=\"Confirm Password\" required name=\"confirmPassword\" [(ngModel)]=\"model.confirmPassword\">\r\n    <!--<div class=\"checkbox mb-3\">\r\n      <label>\r\n        <input type=\"checkbox\" value=\"remember-me\"> Remember me\r\n      </label>\r\n    </div>-->\r\n    <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" [disabled]=\"!loginForm.valid\">Register</button>\r\n    <button class=\"btn btn-lg btn-primary btn-block\" type=\"button\">Cancel</button>\r\n    <p class=\"mt-5 mb-3 text-muted\">© 2017-2018</p>\r\n  </form>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -280,11 +286,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent() {
-        this.model = {};
+        this.model = new User();
     }
     RegisterComponent.prototype.ngOnInit = function () {
+        //this.model.username;
+        //this.model.password;
+        //this.model.confirmPassword
     };
     RegisterComponent.prototype.login = function () {
+        console.log(this.model);
+    };
+    RegisterComponent.prototype.register = function () {
         console.log(this.model);
     };
     RegisterComponent = __decorate([
@@ -296,6 +308,54 @@ var RegisterComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], RegisterComponent);
     return RegisterComponent;
+}());
+
+var User = /** @class */ (function () {
+    function User() {
+    }
+    return User;
+}());
+
+
+/***/ }),
+
+/***/ "./src/app/services/auth.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthService = /** @class */ (function () {
+    function AuthService(http) {
+        this.http = http;
+        this.loginUrl = 'http://localhost:52985/api/auth/login';
+        this.registerUrl = 'http://localhost:52985/api/auth';
+    }
+    AuthService.prototype.login = function (value) {
+        var contentHeader = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpHeaders */]({ 'Content-type': 'application/json' });
+        return this.http.post(this.loginUrl, value, { headers: contentHeader });
+    };
+    AuthService.prototype.register = function (value) {
+        var contentHeader = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["b" /* HttpHeaders */]({ 'Content-type': 'application/json' });
+        return this.http.post(this.registerUrl, value, { headers: contentHeader });
+    };
+    AuthService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
+    ], AuthService);
+    return AuthService;
 }());
 
 

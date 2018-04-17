@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import 'rxjs/add/operator/map';
+import { RegisterComponent } from '../register/register.component';
+
 
 @Injectable()
 export class AuthService {
-  loginUrl = 'http://localhost:52985/api/auth/login/'
-  registerUrl = 'http://localhost:52985/api/auth/register/'
+  baseUrl = 'http://localhost:52985/api/auth/'
 
   constructor(private http: HttpClient) { }
+  //constructor() { }
 
   login(value: string) {
     const contentHeader = new HttpHeaders({ 'Content-type': 'application/json' });
-    return this.http.post(this.loginUrl, value, { headers: contentHeader })
+    return this.http.post(this.baseUrl+"login", value, { headers: contentHeader })
   }
 
-  register(value: string) {
+  register(value) {
     const contentHeader = new HttpHeaders({ 'Content-type': 'application/json' });
-    return this.http.post(this.registerUrl, value, {headers: contentHeader})
+    return this.http.post(this.baseUrl+"register", value, {headers: contentHeader})
   }
 }

@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
   //constructor() { }
 
-  login(value: string) {
+  login(value) {
     const contentHeader = new HttpHeaders({ 'Content-type': 'application/json' });
     return this.http.post(this.baseUrl+"login", value, { headers: contentHeader })
   }

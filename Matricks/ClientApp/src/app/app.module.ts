@@ -10,6 +10,8 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthService } from './services/auth.service';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 
@@ -24,7 +26,9 @@ import { AuthService } from './services/auth.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TooltipModule.forRoot(),
+    CollapseModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

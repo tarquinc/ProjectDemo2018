@@ -55,6 +55,7 @@ namespace Matricks.Controllers
             var newUser = await _repo.Register(user.UserName, user.Password);
             // Temporary return result for testing
             return StatusCode(201, new { ID = newUser.ID, UserName = newUser.UserName });
+            
         }
 
         [HttpPost("login")]

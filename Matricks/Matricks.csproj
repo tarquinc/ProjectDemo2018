@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\dist\out-tsc\src\app\models\AuthUser.ts" />
+    <None Remove="ClientApp\dist\out-tsc\src\app\models\User.ts" />
     <None Remove="Properties\PublishProfiles\Matricks - Web Deploy.pubxml" />
   </ItemGroup>
 
@@ -20,6 +22,11 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\dist\out-tsc\src\app\models\AuthUser.ts" />
+    <TypeScriptCompile Include="ClientApp\dist\out-tsc\src\app\models\User.ts" />
   </ItemGroup>
 
 </Project>

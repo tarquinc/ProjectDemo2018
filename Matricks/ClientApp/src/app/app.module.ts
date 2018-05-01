@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
-import { JwtModule, JwtHelperService } from '@auth0/angular-jwt'; 
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,9 +28,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     FormsModule,
     HttpClientModule,
     TooltipModule.forRoot(),
-    CollapseModule.forRoot(),
-    JwtHelperService,
-    JwtModule
+    CollapseModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
